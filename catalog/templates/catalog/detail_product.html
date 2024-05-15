@@ -1,0 +1,23 @@
+{% extends 'catalog/home.html' %}
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ object.name_product }}</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ object.price }} RUB</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li>- Описание: {{ object.description }}</li>
+                        <li>- Категория: {{ object.category }}</li>
+                        <li>- Дата создания: {{ object.create_at }}</li>
+                        <li>- Дата изменения: {{ object.update_at }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
