@@ -13,3 +13,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['category']
     search_fields = ['name_product', 'description']
     list_editable = ['preview']
+
+
+

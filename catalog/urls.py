@@ -3,13 +3,13 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from catalog.apps import CatalogConfig
-from catalog.views import home, contacts, detail_product, products_list
+from catalog.views import HomeTemplateView, ContactsView, ProductListView, ProductDitailView
 
 app_name = CatalogConfig.name
 
 urlpatterns = [
-    path('', home),
-    path('contacts/', contacts, name='contacts'),
-    path('detail/<int:pk>/', detail_product, name='detail_product'),
-    path('home/list/', products_list, name='products_list')
+    path('', HomeTemplateView.as_view(), name='home'),
+    path('contacts/', ContactsView.as_view(), name='contacts_list'),
+    path('detail/<int:pk>/', ProductDitailView.as_view(), name='detail_product'),
+    path('home/list/', ProductListView.as_view(), name='products_list')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
