@@ -1,7 +1,8 @@
 from django.contrib import admin
 
-from catalog.models import Category, Product
+from catalog.models import Category, Product, Version
 
+admin.site.register(Version)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
