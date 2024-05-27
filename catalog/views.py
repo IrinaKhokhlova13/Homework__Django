@@ -16,9 +16,7 @@ class ProductDitailView(DetailView):
     template_name = "catalog/product_detail.html"
     extra_context = {'title': 'Продукты на любой вкус'}
 
-class ProductListView(ListView):
-    model = Product
-    template_name = "catalog/products_list.html"
+
 
 class HomeTemplateView(TemplateView):
     template_name = "catalog/home.html"
@@ -29,7 +27,7 @@ class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_from.html'
-    success_url = reverse_lazy('catalog:products_list')
+    success_url = reverse_lazy('catalog:product_list')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -45,7 +43,7 @@ class ProductCreateView(CreateView):
 class ProductUpdateView(UpdateView):
     model = Product
     template_name = 'catalog/product_from.html'
-    success_url = reverse_lazy('catalog:products_list')
+    success_url = reverse_lazy('catalog:product_list')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -63,9 +61,67 @@ class ProductUpdateView(UpdateView):
 
 class ProductDeleteView(DeleteView):
     model = Product
-    success_url = reverse_lazy('catalog:products_list')
+    success_url = reverse_lazy('catalog:product_list')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Удалить продукт'
+        return context
+
+
+
+
+class ProductListView(ListView):
+    model = Product
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        products = Product.objects.all()
+
+        for product in products:
+            versions = Version.objects.filter(product=product)
+            active_versions = versions.filter(current_version=True)
+            if active_versions:
+                product.name_version = active_versions.last().name_version
+                product.number_version = active_versions.last().number_v
+        context_data['object_list'] = products
+        return context_data
+
+
+class VersionListView(ListView):
+    model = Version
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = Version.objects.all()
+        products = Product.objects.all()
+        for product in products:
+            print(product)
+            versions = Version.objects.filter(product=product)
+            # print(queryset.product == product)
+            return versions
+        return Version.objects.filter(product=Product.objects.get(pk=self.kwargs.get('pk')))
+
+class VersionCreateView(CreateView):
+    model = Version
+    form_class = VersionForm
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class VersionUpdateView(UpdateView):
+    model = Version
+    form_class = VersionForm
+    success_url = reverse_lazy('catalog:product_list')
+
+
+class VersionDetailView(DetailView):
+    model = Version
+    template_name = "catalog/version_detail.html"
+
+
+class VersionDeleteView(DeleteView):
+    model = Version
+    success_url = reverse_lazy('catalog:versions')
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['name_version'] = 'Удалить версию'
         return context
