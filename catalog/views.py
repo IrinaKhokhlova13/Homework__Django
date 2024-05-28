@@ -120,7 +120,7 @@ class VersionDetailView(DetailView):
 
 class VersionDeleteView(DeleteView):
     model = Version
-    success_url = reverse_lazy('catalog:versions')
+    success_url = reverse_lazy('catalog:product_list')
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context['name_version'] = 'Удалить версию'
