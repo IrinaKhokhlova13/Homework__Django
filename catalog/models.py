@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'blank': True, 'null': True}
 
 class Category(models.Model):
@@ -23,6 +25,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='цена за покупку')
     create_at = models.DateField(verbose_name='дата создания')
     update_at = models.DateField(verbose_name='дата последнего изменения')
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', **NULLABLE)
 
 
     def __str__(self):
@@ -58,10 +61,10 @@ class Contacts(models.Model):
 class Version(models.Model):
 
     """Модель версия продукта"""
-    product = models.ForeignKey(Product, verbose_name='продукт', on_delete=models.CASCADE, related_name='versions')
+    product = models.ForeignKey(Product, verbose_name='продукт', on_delete=models.CASCADE, related_name='versions', **NULLABLE)
     number_v = models.PositiveIntegerField(verbose_name='номер версии')
     name_version = models.CharField(max_length=100, verbose_name='название версии')
-    current_version = models.BooleanField(default=True, verbose_name='признак текущей версии')
+    current_version = models.BooleanField(default=True, verbose_name='Опубликовано')
 
     def __str__(self):
         return f'{self.name_version} - {self.number_v}'

@@ -6,12 +6,12 @@
         <a class="p-2 btn btn-outline-primary" href="http://127.0.0.1:8000/home/list/">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="http://127.0.0.1:8000/detail/8/">Один продукт(Говядина)</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'blog:blog_list' %}">Блог</a>
-<!--        {% if user.is_authenticated %}-->
+        {% if user.is_authenticated %}
 <!--        <a class="p-2 btn btn-outline-primary" href="/users/profile/">Профиль</a>-->
-<!--        <a class="p-2 btn btn-outline-primary" href="/users/logout/">Выйти</a>-->
-<!--        {% else %}-->
-<!--        <a class="p-2 btn btn-outline-primary" href="/users/login/">Войти</a>-->
-<!--        <a class="p-2 btn btn-outline-primary" href="/users/register/">Регистрация</a>-->
-<!--        {% endif %}-->
+        <a class="p-2 btn btn-outline-primary" href="/users/logout/">Выйти</a>
+        {% else %}
+        <a class="p-2 btn btn-outline-primary" href="/users/login/">Войти</a>
+        <a class="p-2 btn btn-outline-primary" href="/users/register/">Регистрация</a>
+        {% endif %}
     </nav>
 </div>
