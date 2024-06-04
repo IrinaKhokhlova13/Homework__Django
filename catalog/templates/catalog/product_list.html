@@ -3,9 +3,12 @@
 {% block content %}
 {% csrf_token %}
 <div class="container col-12">
+    {% csrf_token %}
+    {% if user.is_authenticated %}
     <a type="button" class="btn btn-lg btn-block btn-outline-primary"
        href="{% url 'catalog:product_form' %}">
         Добавить запись</a>
+    {% endif %}
     <div class="row text-center col-12">
         {% for product in object_list %}
         <div class="col-4">
@@ -32,7 +35,7 @@
                        href="{% url 'catalog:product_detail' product.pk %}">
                         Подробнее
                     </a>
-                    {% if user.group == moderator or user == product.owner %}
+                    {% if user == object.owner or perms.product.set_published_product and perms.product.change_description_product and perms.product.change_category %}
                     <a type="button" class="btn btn-lg btn-block btn-outline-primary"
                        href="{% url 'catalog:product_update' product.pk %}">
                         Изменить
