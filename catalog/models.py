@@ -26,6 +26,7 @@ class Product(models.Model):
     create_at = models.DateField(verbose_name='дата создания')
     update_at = models.DateField(verbose_name='дата последнего изменения')
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', **NULLABLE)
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
 
 
     def __str__(self):
@@ -35,10 +36,18 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         permissions = [
-            ('cancellation_of_publication', 'Canceling the publication of the product'),
-            ('changes_the_description', 'Changes the description of any product'),
-            ('changes_the_category', 'Changes the category of any product'),
-
+            (
+                'set_published_product',
+                'Can set published product'
+            ),
+            (
+                'change_description_product',
+                'Can change description product'
+            ),
+            (
+                'change_category',
+                'Can change category'
+            ),
         ]
 
 

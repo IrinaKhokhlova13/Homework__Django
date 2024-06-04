@@ -32,10 +32,12 @@
                        href="{% url 'catalog:product_detail' product.pk %}">
                         Подробнее
                     </a>
+                    {% if user.group == moderator or user == product.owner %}
                     <a type="button" class="btn btn-lg btn-block btn-outline-primary"
                        href="{% url 'catalog:product_update' product.pk %}">
                         Изменить
                     </a>
+                    {% endif %}
                     <a type="button" class="btn btn-lg btn-block btn-outline-primary"
                        href="{% url 'catalog:product_delete' product.pk %}">
                         Удалить

@@ -50,10 +50,11 @@ class RegisterView(CreateView):
 
 
 def email_verification(request, verification_code):
-    verification_code = request.POST.get('verification_code')
+    # verification_code = request.POST.get('verification_code')
     user = get_object_or_404(User, verification_code=verification_code)
     if user:
         user.is_active = True
+        user.is_staff = True
         user.save()
         return redirect(reverse("users:login"))
     else:
@@ -75,7 +76,7 @@ class ResetPassword(TemplateView):
             user.set_password(new_password)
         user.save()
         message = (f'Ваш новый пароль: {new_password}'
-                   f'Сохраняйте в тайне!')
+                   f'  Сохраняйте в тайне!')
         send_mail(
             subject='Новый пароль',
             message=message,

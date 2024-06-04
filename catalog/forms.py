@@ -42,7 +42,7 @@ class ProductForm(StyleMixin, ModelForm):
 class ProductModeratorForm(StyleMixin, ModelForm):
     class Meta:
         model = Product
-        fields = ['description', 'category']
+        fields = ['name_product', 'description', 'category']
 
 
 class VersionForm(StyleMixin, ModelForm):

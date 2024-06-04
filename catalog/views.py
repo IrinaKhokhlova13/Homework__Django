@@ -77,9 +77,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user == self.object.owner:
             return ProductForm
-        if (user.has_perm('product.cancellation_of_publication')
-                and user.has_perm('product.changes_the_description')
-                and user.has_perm('product.changes_the_category')):
+        if (user.has_perm('product.set_published_product')
+                and user.has_perm('product.change_description_product')
+                and user.has_perm('product.change_category')):
             return ProductModeratorForm
         else:
             return PermissionDenied
