@@ -2,10 +2,11 @@
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, DeleteView, UpdateView
 from django.forms import inlineformset_factory
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
-from catalog.models import Product, Contacts, Version
+from catalog.models import Product, Contacts, Version, Category
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
+from catalog.services import get_categories_from_cache
 
 class ContactsView(ListView):
     model = Contacts
@@ -153,3 +154,11 @@ class VersionDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['name_version'] = 'Удалить версию'
         return context
+
+
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_queryset(self):
+        return get_categories_from_cache()

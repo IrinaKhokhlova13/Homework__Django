@@ -1,0 +1,15 @@
+{% extends 'catalog/home.html' %}
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        {% for object in object_list %}
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <p>Называние: {{ object.name_category }}</p>
+                <p>Описание: {{ object.description|slice:100 }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
